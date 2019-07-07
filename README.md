@@ -1,4 +1,7 @@
 # genKYandOnePion
+EG is based on:
+1) at Q2 < 5GeV2 interpolation of the available CLAS data 
+2) at Q2 > 5GeV2 extrapolation of the available CLAS data that is based on Operator Product Expansion 
 
 Compile: ./COMPILE_eg_ky
 run: ./eg_ky
