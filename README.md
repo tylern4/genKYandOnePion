@@ -24,3 +24,5 @@ To set the parameters use eg_ky.cpp file. There are parameters in eg_ky.cpp:
 	outputFileName should be something that ends on ".lund". An example: "pin_1.lund" 
 	
 The output will be a lund file with the name that you set in outputFileName variable.
+
+Contact: valerii@jlab.org
