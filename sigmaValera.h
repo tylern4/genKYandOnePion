@@ -18,7 +18,7 @@ bool check_kin(double Q,double W, double Ebeam)
  else return 0;
 }
 
-bool check_input_data(string __channelName,double __Ebeam, double __Q2min, double __Q2max, 
+bool check_input_data(string dataPath, string __channelName,double __Ebeam, double __Q2min, double __Q2max, 
 						double __Wmin, double __Wmax, int __nEventMax){
  if ((__channelName!="KLambda")&&(__channelName!="KSigma")&&(__channelName!="PiN")&&(__channelName!="Pi0P")){
   cout<<"incorrect name of chanel, pls try: KLambda or KSigma or Pi0P or PiN"<< endl;
@@ -35,8 +35,16 @@ bool check_input_data(string __channelName,double __Ebeam, double __Q2min, doubl
  if ((__Q2max>12)||(__Q2max<0)){
   cout<<"incorrect Q2_max, Q2_max<=12"<< endl;
   return 0;}
- if (__Wmax>4){cout<<"incorrect W_max, try less than 5 GeV ;"<< endl; return 0;}
+ if (__Wmax>4){cout<<"incorrect W_max, try less than 4 GeV ;"<< endl; return 0;}
+
+
+ ifstream interp_right;
+ interp_right.open(dataPath+"/KL_interp.txt");
+ if (!interp_right.is_open()) { cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt"<<endl;;return 0;}
+
  return 1;
+
+ 
 }
 
 class Sigma{
@@ -126,7 +134,7 @@ class Sigma{
           double Wmin,  double Wmax  );//max CS in that region
 ////other:
  double porog_ch(int num_chanel);//threshold of the reaction
- Sigma(int chanel);//constr
+ Sigma(string dataPath, int chanel);//constr
 	protected:
 };
 ///////////////realization:///////////////////////////////////////////////////////////
@@ -452,7 +460,7 @@ if (d5sigmaMax==0){cout<<"incorrect kinematic region, pls check input Q2 and Ene
 			return CS_int_fi_costeta;
 		}
 
-		Sigma::Sigma(int chanel)
+		Sigma::Sigma(string dataPath, int chanel)
 		{
 			ifstream interp_right;
 			ifstream file_F1;
@@ -466,7 +474,7 @@ if (d5sigmaMax==0){cout<<"incorrect kinematic region, pls check input Q2 and Ene
 			ifstream data_error;
 
 			type_chanel=chanel;
-
+//cout<<"000000000000000000000";
 			switch (chanel)
 			{
 				case 1:{
@@ -475,16 +483,17 @@ if (d5sigmaMax==0){cout<<"incorrect kinematic region, pls check input Q2 and Ene
 					min_cos=-0.7749999;
 					range_fi=1;range_cos=1; 
 
-					interp_right.open("data/KL_interp.txt");
-					file_F1.open("data/KLambda_Fit_F1.txt");
-					file_F2.open("data/KLambda_Fit_F2.txt");
-					file_Qmax.open("data/KLambda_CS_Qmax_Fit_gladk.txt");
+					interp_right.open(dataPath+"/KL_interp.txt");
+					if (!interp_right.is_open()) cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt";
+					file_F1.open(dataPath+"/KLambda_Fit_F1.txt");
+					file_F2.open(dataPath+"/KLambda_Fit_F2.txt");
+					file_Qmax.open(dataPath+"/KLambda_CS_Qmax_Fit_gladk.txt");
 
-					CS_data.open("data/KL_s4.txt");
-					CS_data_int.open("data/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					file_low_photo_data.open("data/KL_ph_out.txt");
-					file_ph_int.open("data/KL_ph_int.txt");
-					from_Evgen.open("data/KL_ph_int.txt");
+					CS_data.open(dataPath+"/KL_s4.txt");
+					CS_data_int.open(dataPath+"/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					file_low_photo_data.open(dataPath+"/KL_ph_out.txt");
+					file_ph_int.open(dataPath+"/KL_ph_int.txt");
+					from_Evgen.open(dataPath+"/KL_ph_int.txt");
 
 				}break;
 				case 2:{ 
@@ -493,49 +502,52 @@ if (d5sigmaMax==0){cout<<"incorrect kinematic region, pls check input Q2 and Ene
 					min_cos=-0.7749999;
 					range_fi=1;range_cos=1; 
 
-					interp_right.open("data/KS_interp.txt");
-					file_F1.open("data/KSigma_Fit_F1.txt");
-					file_F2.open("data/KSigma_Fit_F2.txt");
-					file_Qmax.open("data/KSigma_CS_Qmax_Fit_gladk.txt");
+					interp_right.open(dataPath+"/KS_interp.txt");
+					if (!interp_right.is_open()) cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt";
+					file_F1.open(dataPath+"/KSigma_Fit_F1.txt");
+					file_F2.open(dataPath+"/KSigma_Fit_F2.txt");
+					file_Qmax.open(dataPath+"/KSigma_CS_Qmax_Fit_gladk.txt");
 
-					CS_data.open("data/KS_s4.txt");
-					CS_data_int.open("data/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					file_low_photo_data.open("data/KS_ph_out_new.txt");
-					file_ph_int.open("data/KS_ph_int_new.txt");
-					from_Evgen.open("data/KS_ph_int_new.txt");
-					data_error.open("data/CSKS_Theory.txt");
+					CS_data.open(dataPath+"/KS_s4.txt");
+					CS_data_int.open(dataPath+"/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					file_low_photo_data.open(dataPath+"/KS_ph_out_new.txt");
+					file_ph_int.open(dataPath+"/KS_ph_int_new.txt");
+					from_Evgen.open(dataPath+"/KS_ph_int_new.txt");
+					data_error.open(dataPath+"/CSKS_Theory.txt");
 				}break;
 				case 3:{ 
 					Q_max_channel=6;
    					range_fi=2;range_cos=1; 
 					max_cos=0.89999;
 					min_cos=-0.89999;
-					interp_right.open("data/Pi0P_interp.txt");
-					file_F1.open("data/Pi0P_Fit_F1.txt");
-					file_F2.open("data/Pi0P_Fit_F2.txt");
-					file_Qmax.open("data/Pi0P_CS_Qmax_Fit_gladk.txt");
+					interp_right.open(dataPath+"/Pi0P_interp.txt");
+					if (!interp_right.is_open()) cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt";
+					file_F1.open(dataPath+"/Pi0P_Fit_F1.txt");
+					file_F2.open(dataPath+"/Pi0P_Fit_F2.txt");
+					file_Qmax.open(dataPath+"/Pi0P_CS_Qmax_Fit_gladk.txt");
 
-					CS_data.open("data/CS_pi0p.txt");
-					CS_data_int.open("data/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-					file_low_photo_data.open("data/pi0p_ph_out.txt");
-					file_ph_int.open("data/pi0p_ph_int.txt");
-					from_Evgen.open("data/pi0p.data");
+					CS_data.open(dataPath+"/CS_pi0p.txt");
+					CS_data_int.open(dataPath+"/CS_PiN_int.txt");//ISPRAVIT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					file_low_photo_data.open(dataPath+"/pi0p_ph_out.txt");
+					file_ph_int.open(dataPath+"/pi0p_ph_int.txt");
+					from_Evgen.open(dataPath+"/pi0p.data");
 				}break;
 				case 4:{ 
 					Q_max_channel=4.16;
 					range_fi=2;range_cos=2; 
 					max_cos=0.899999;
 					min_cos=-0.699999;
-					interp_right.open("data/PiN_interp.txt");
-					file_F1.open("data/PiN_Fit_F1.txt");
-					file_F2.open("data/PiN_Fit_F2.txt");
-					file_Qmax.open("data/PiN_CS_Qmax_Fit_gladk.txt");
+					interp_right.open(dataPath+"/PiN_interp.txt");
+					if (!interp_right.is_open()) cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt";
+					file_F1.open(dataPath+"/PiN_Fit_F1.txt");
+					file_F2.open(dataPath+"/PiN_Fit_F2.txt");
+					file_Qmax.open(dataPath+"/PiN_CS_Qmax_Fit_gladk.txt");
 
-					CS_data.open("data/CS_PiN.txt");
-					CS_data_int.open("data/CS_PiN_int.txt");
-					file_low_photo_data.open("data/piN_ph_out.txt");
-					file_ph_int.open("data/piN_ph_int_out.txt");
-					from_Evgen.open("data/pipn.data");
+					CS_data.open(dataPath+"/CS_PiN.txt");
+					CS_data_int.open(dataPath+"/CS_PiN_int.txt");
+					file_low_photo_data.open(dataPath+"/piN_ph_out.txt");
+					file_ph_int.open(dataPath+"/piN_ph_int_out.txt");
+					from_Evgen.open(dataPath+"/pipn.data");
 
 				}break;
 				defult:{ 

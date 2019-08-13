@@ -34,7 +34,7 @@ class evGenerator {
 
 public:
 
-evGenerator(string t, double E, 
+evGenerator(string dataPath, string t, double E, 
             double q2min, double q2max,
 	    double wmin,  double wmax, 
 		//double cosmin,  double cosmax,//only for test
@@ -87,7 +87,7 @@ evGenerator(string t, double E,
   // Initilize: read data file
   //model = new sigmaKY(type);
 
-  model = new Sigma(channel);
+  model = new Sigma(dataPath,channel);
 
 
   // Find maximum of the cross section
@@ -134,10 +134,10 @@ void getEvent(double &Q2, double &W,
 
     //double cosThetaK=randomIntv(cos_min, cos_max);//only for test
     double cosThetaK = randomIntv(-0.999999,0.999999);//real
-
+//cout<<"cosThetaK="<<cosThetaK<<endl;
     double thetaK = acos(cosThetaK);
     double phiK = randomIntv(0.0, 2*constantPi);
-
+//cout<<"cosThetaK="<<cosThetaK<<endl;
     double d5sigma;
     if(type == "KLambda" || type == "KSigma"|| type == "Pi0P"|| type == "PiN") {
 //cout<<"Q2: "<<Q2<<" W: "<<W<<" thetaK: "<< thetaK<<" phiK: "<< phiK<<endl;
@@ -147,10 +147,13 @@ void getEvent(double &Q2, double &W,
     }
         
     nTry++;
-   // cout<<" nTry="<<nTry<<" d5/max= "<<" d5sigma="<<d5sigma<<" d5sigmaMax="<<d5sigmaMax<<endl;
+
+	//if (cos(acos(arg))<0.9) cout<<" ="<<" d5/max= "<<" d5sigma="<<d5sigma<<" d5sigmaMax="<<d5sigmaMax<<" theta: "<<acos(arg)<<" cos: "<<cos(acos(arg))<<endl;
+
     if(randomIntv(0.,1.) < d5sigma/d5sigmaMax) {
+
        nEvent++;
-            
+
        double W2 = W*W;
        double omega = getomega(Q2,W);
        if(omega <=0. ) continue;
@@ -161,6 +164,9 @@ void getEvent(double &Q2, double &W,
        double theta = acos(arg);
        double phi = randomIntv(0.0, 2*constantPi);
        
+
+
+
        // 4-momentum of final electron in LAB frame
        Pefin.SetXYZT(1.,1.,1.,Ee);
        Pefin.SetRho(sqrt(Ee*Ee - massElectron2)); 
