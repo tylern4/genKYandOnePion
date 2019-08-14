@@ -12,7 +12,9 @@ Using (if You are using executable file skip following steps: 2,3,4):
 3) Then type command: chmod +x COMPILE_eg_ky
 4) To compile: ./COMPILE_eg_ky
 5) setenv dataPATH /WAY/TO/DATA/FOLDER
-Here is an example for my local PC, do not copy this comand: setenv dataPATH /home/CLAS12/EG/data
+
+Here is an example for my local PC, do not copy this comand: 
+setenv dataPATH /home/CLAS12/EG/data
 
 6) to run exe file: ./eg_ky arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8
 
