@@ -11,10 +11,10 @@ Using (if you are using executable file skip following steps: 2-4):
 2) git clone of the EG: git clone https://github.com/ValeriiKlimenko/genKYandOnePion/ 
 3) Then type command: chmod +x COMPILE_eg_ky
 4) To compile: ./COMPILE_eg_ky
-5) setenv dataPATH /WAY/TO/THE/DATA/FOLDER
+5) setenv DataKYandOnePion /WAY/TO/THE/DATA/FOLDER
 
 Here is an example for my local PC, do not copy this command: 
-setenv dataPATH /home/CLAS12/EG/data
+setenv DataKYandOnePion /home/CLAS12/EG/data
 
 6) to run exe file: ./eg_ky arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8
 
