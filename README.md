@@ -5,7 +5,8 @@ EG is based on:
 
 Requirments: Cern root.
 
-Using:
+Using (if You are using executable file skip following steps: 2,3,4):
+
 1) install root (https://root.cern.ch/building-root) or type command: use root/6.10.02
 2) git clone of the EG: git clone https://github.com/ValeriiKlimenko/genKYandOnePion/ 
 3) Then type command: chmod +x COMPILE_eg_ky
