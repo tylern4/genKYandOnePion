@@ -5,13 +5,13 @@ EG is based on:
 
 Requirments: Cern root.
 
-Using (if You are using executable file skip following steps: 2,3,4):
+Using (if you are using executable file skip following steps: 2-4):
 
 1) install root (https://root.cern.ch/building-root) or type command: use root/6.10.02
 2) git clone of the EG: git clone https://github.com/ValeriiKlimenko/genKYandOnePion/ 
 3) Then type command: chmod +x COMPILE_eg_ky
 4) To compile: ./COMPILE_eg_ky
-5) setenv dataPATH /WAY/TO/DATA/FOLDER
+5) setenv dataPATH /WAY/TO/THE/DATA/FOLDER
 
 Here is an example for my local PC, do not copy this comand: 
 setenv dataPATH /home/CLAS12/EG/data
@@ -22,16 +22,16 @@ To set the parameters use arg1-arg8
  Its format is as follows.
  - arg1 is the string "KLambda" or "KSigma" or "Pi0P" or "PiN"
  - arg2 is Ebeam that should be >0 and less than 12GeV (Energy of the beam)
- - arg3 and arg4 contains two numbers Q2min and Q2max.
+ - arg3 and arg4 contain two numbers Q2min and Q2max.
    This is the range in Q2, where the events will be generated.
- - arg5 and arg6 two numbers Wmin and Wmax.
+ - arg5 and arg6 are two numbers Wmin and Wmax.
    This is the range in W, where the events will be generated.
    Wmin more then zero (GeV); (if Wmin less than treshold, treshold value will be used)
    Wmax less then 4 GeV;
  - arg7 is the number of events to be generated.
  - arg8 is the name of the output file.
  
- AN example: ./eg_ky KSigma 11. 2. 11.999 1.5 4.0 5000 lund_KS.lund
+ An example: ./eg_ky KSigma 11. 2. 11.999 1.5 4.0 5000 lund_KS.lund
 	
 The output will be a lund file with the name that you set in outputFileName variable.
 
