@@ -40,7 +40,8 @@ bool check_input_data(string dataPath, string __channelName,double __Ebeam, doub
 
  ifstream interp_right;
  interp_right.open(dataPath+"/KL_interp.txt");
- if (!interp_right.is_open()) { cout<<"ERROR: wrong way to the data, pls check eg_config_test.txt"<<endl;;return 0;}
+//cout<<" wau:"<<dataPath+"/KL_interp.txt"<<endl;
+ if (!interp_right.is_open()) { cout<<"ERROR: wrong way to the data"<<endl;return 0;}
 
  return 1;
 

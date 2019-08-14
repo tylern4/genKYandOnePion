@@ -21,36 +21,89 @@
 using namespace std;
 
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
+
+    if (argc < 9 || argc > 9)  
+    { 
+cout<<endl;
+	  cerr << " Enter 9 arguments only eg.\"./eg_ky arg1 arg2 arg3 arg4 arg5 arg6 arg7 arg8\"" << endl;
+cout<<endl;
+	  cerr << " arg1 is \"KLambda\" or \"KSigma\" or \"Pi0P\" or \"PiN\"" << endl;
+	  cerr << " arg2 is Ebeam, arg3 is Q2min, arg4 is Q2max, arg5 is Wmin, arg6 is Wmax " << endl;
+	  cerr << " arg7 is nEvents, arg8 is outputFileName" << endl;
+cout<<endl;
+	  cerr << " Example: .\"./eg_ky KSigma 11. 2. 11.999 1.5 4.0 5000 lund_KS.lund\"" << endl;
+cout<<endl;
+	  cerr << " STOP!" << endl;
+	  return 1;
+    } 
+  
+
 
 
         int channel;
-	string channelName, outputFileName;
+	string channelName, outputFileName,dataPath;
 	double Ebeam, Q2min, Q2max, Wmin, Wmax;
 	int nEventMax;
         double jr, mr, gr, a12, a32, s12, onlyres;
 
-        
 
-        // parameters
-	//channelName = "Pi0P"; //"KLambda" or "KSigma" or "Pi0P" or "PiN"
-	channelName = "PiN"; //"KLambda" or "KSigma" or "Pi0P" or "PiN"
-	Ebeam = 6.4;//>0
-	//Ebeam = 10.6;//>0
-	Q2min = 0.5;//more then 0.001
-	Q2max = 7;//up to 12 GeV2;
-	Wmin = 1.;// >=0
-	Wmax = 2;//up to 4 GeV;
-        nEventMax = 100000;
-	//outputFileName = "lund_PiN_E10_f5t9_n2.lund";
-	outputFileName = "lund_PiN_E6_f05t7_100_n4.lund";
 
-	bool check_in_data=check_input_data(channelName,Ebeam,Q2min,Q2max,Wmin,Wmax,nEventMax);
+	channelName=argv[1];  
+	Ebeam=atoi(argv[2]);
+	Q2min=atoi(argv[3]);
+	Q2max=atoi(argv[4]);
+	Wmin=atoi(argv[5]);
+	Wmax=atoi(argv[6]);
+	nEventMax=atoi(argv[7]);
+	outputFileName=argv[8];  
+	//dataPath=argv[9];  
+
+        	dataPath=getenv("dataPATH");
+//cout<<"dataPath: "<<dataPath<<endl;
+
+	cout << "\nEvent generator started. " <<  endl;
+
+
+	
+
+/*
+	// read config. file
+	ifstream input;
+	string fName = argv[1];
+	input.open(fName.c_str());
+	if(!input.good()) {
+	  cerr << " eg_ky.cpp: can not open file: " << fName.c_str() << endl;
+	  cerr << " STOP!" << endl;
+	  return 1;
+	}
+	std::getline(input,channelName); 
+	cout << " Configuration file is " << fName << endl;
+	input >> Ebeam >> Q2min >> Q2max >> Wmin >> Wmax >> nEventMax;
+*/
+	cout << " Channel is " << channelName << endl;
+	cout << " Ebeam is " << Ebeam << " Gev"<<endl;
+	cout << " Q2min is " << Q2min << " Gev2"<<endl;
+	cout << " Q2max is " << Q2max << " Gev2"<<endl;
+	cout << " Wmin is " << Wmin << " Gev"<<endl;
+	cout << " Wmax is " << Wmax << " Gev"<<endl;
+	cout << " nEvents is " << nEventMax << endl;
+//	input.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//	std::getline(input,outputFileName); outputFileName.erase(remove(outputFileName.begin(),outputFileName.end(),' '),outputFileName.end());
+	cout << " outputFileName is " << outputFileName << endl;
+//	std::getline(input,dataPath); dataPath.erase(remove(dataPath.begin(),dataPath.end(),' '),dataPath.end());
+	cout << " dataPath is " << dataPath << endl;
+	cout<<endl;
+//	input.close();
+
+
+
+	bool check_in_data=check_input_data(dataPath,channelName,Ebeam,Q2min,Q2max,Wmin,Wmax,nEventMax);
 	if (check_in_data==0) {return 0;}
 
 	// initilize event generator
-	evGenerator eg(channelName, Ebeam,  Q2min, Q2max, Wmin, Wmax);
+	evGenerator eg(dataPath,channelName, Ebeam,  Q2min, Q2max, Wmin, Wmax);
 	channel=num_chanel(channelName);
 
         cout << endl
