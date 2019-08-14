@@ -60,7 +60,7 @@ cout<<endl;
 	outputFileName=argv[8];  
 	//dataPath=argv[9];  
 
-        	dataPath=getenv("dataPATH");
+        	dataPath=getenv("DataKYandOnePion");
 //cout<<"dataPath: "<<dataPath<<endl;
 
 	cout << "\nEvent generator started. " <<  endl;
